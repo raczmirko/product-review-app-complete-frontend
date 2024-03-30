@@ -48,3 +48,8 @@
     left: 0;
     padding: 10px;
 }
+
+.footer-watermark {
+    margin-top: 5px;
+    font-size: 10px;
+}

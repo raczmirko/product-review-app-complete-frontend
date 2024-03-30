@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
-import { CgArrowRightR, CgHome, CgLogIn, CgLogOut } from "react-icons/cg";
+import { CgArrowRightR, CgArrowLeftR, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
 import logo from '../res/icon.png';
 
 const Sidebar = () => {
@@ -14,12 +14,13 @@ const Sidebar = () => {
   const sidebarOptions = [
       { icon: <CgHome />, text: 'Home', route: '/'},
       { icon: <CgLogIn />, text: 'Login', route: '/' },
-      { icon: <CgLogOut />, text: 'Register', route: 'user/register' }
+      { icon: <CgUserAdd />, text: 'Register', route: 'user/register' }
     ];
 
     return (
         <div className={`sidebar ${expanded ? 'expanded' : ''}`}>
-            <button onClick={toggleSidebar}><CgArrowRightR /></button>
+            {expanded && <button onClick={toggleSidebar}><CgArrowLeftR /></button>}
+            {!expanded && <button onClick={toggleSidebar}><CgArrowRightR /></button>}
             <ul className="sidebar-items">
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
@@ -31,8 +32,15 @@ const Sidebar = () => {
                 ))}
             </ul>
             <div className="sidebar-footer">
-                {expanded && <img src="../res/icon.png" alt="logo"/>}
-                {expanded && <span>App by Mirkó Rácz</span>}
+                <div>
+                    <NavLink to="/logout">
+                        <CgLogOut />
+                        {expanded && <span> Log out</span>}
+                    </NavLink>
+                </div>
+                <div className="footer-watermark">
+                    {expanded && <span>Created by Mirkó Rácz © 2024.</span>}
+                </div>
             </div>
         </div>
     );
