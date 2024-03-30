@@ -35,7 +35,7 @@ const Register = () => {
 
     return (
         <div className="registration-form">
-            <h2>Register</h2>
+            <h2>Create account</h2>
             <form onSubmit={handleRegistration}>
                 <div className="form-group">
                     <label>Username:</label>
@@ -45,7 +45,7 @@ const Register = () => {
                     <label>Password:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
