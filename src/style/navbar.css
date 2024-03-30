@@ -1,5 +1,5 @@
-.menu {
-    display: flex;
+.navbar {
+    display: block;
     align-items: center;
     justify-content: space-between;
     background-color: #333;
@@ -7,15 +7,17 @@
     color: white;
 }
 
-.menu-title {
+.navbar-title {
+    padding-left: 5%;
     font-size: 16px;
     font-family: "Arial Narrow", sans-serif;
     text-transform: uppercase;
+    text-align: center;
     letter-spacing: 2px;
     margin: 0;
 }
 
-.menu-items {
+.navbar-items {
     list-style: none;
     display: flex;
     gap: 20px;
@@ -27,6 +29,6 @@
     font-size: 18px;
 }
 
-.menu-icon {
+.navbar-icon {
     width: 50px;
 }
