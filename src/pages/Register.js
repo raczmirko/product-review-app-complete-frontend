@@ -1,0 +1,53 @@
+import React, { useState } from 'react';
+
+const Register = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleRegistration = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        const credentials = {
+            username: username,
+            password: password
+        };
+
+        fetch('http://localhost:8080/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            // TODO redirect on registration
+        })
+        .catch(error => console.error('Error:', error));
+    };
+
+    return (
+        <div>
+            <h2>Register</h2>
+            <form onSubmit={handleRegistration}>
+                <div>
+                    <label>Username:</label>
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    );
+};
+
+export default Register;
