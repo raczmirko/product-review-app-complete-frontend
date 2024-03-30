@@ -1,0 +1,42 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 5%; /* Initially set to 5% */
+  background-color: #333; /* Sidebar background color */
+  transition: width 0.3s ease; /* Smooth transition for width changes */
+  z-index: 1000; /* Ensure the sidebar appears above other content */
+}
+
+.sidebar.expanded {
+  width: 20%; /* When expanded, set width to 20% */
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #555; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-items {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-items li {
+  padding: 10px;
+}
+
+.sidebar-items li a {
+  color: #fff; /* Sidebar link text color */
+  text-decoration: none;
+}
+
+.sidebar-items li a.active {
+  font-weight: bold; /* Style for active link */
+}
