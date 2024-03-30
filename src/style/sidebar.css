@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: 3%; /* Initially set to 5% */
+  width: 40px;
+  min-width: 40px;
   background-color: #333; /* Sidebar background color */
   transition: width 0.3s ease; /* Smooth transition for width changes */
   z-index: 1000; /* Ensure the sidebar appears above other content */
@@ -33,10 +34,17 @@
 }
 
 .sidebar-items li a {
-  color: #fff; /* Sidebar link text color */
+  color: #fff;
   text-decoration: none;
 }
 
 .sidebar-items li a.active {
-  font-weight: bold; /* Style for active link */
+  font-weight: bold;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
 }
