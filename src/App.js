@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Navigation from './components/Navigation';
+import Navbar from './components/Navbar';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -16,7 +16,7 @@ const App = () => {
 
     return (
         <Router>
-        <Navigation />
+        <Navbar />
           <div className="app">
             <Sidebar />
             <div className="content">
