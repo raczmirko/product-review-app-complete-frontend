@@ -1,15 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import Navigation from './components/Navigation';
 import Register from './pages/Register';
+import Home from './pages/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
 
 const App = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+      const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+      };
+
     return (
-        <div>
-            <h1>Welcome to Your App</h1>
-            <Register /> {}
-        </div>
-    );
+        <Router>
+        <Navigation />
+          <div className="app">
+            <Sidebar />
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/user/register" element={<Register />} />
+              </Routes>
+            </div>
+          </div>
+        </Router>
+      );
 };
 
 export default App;
