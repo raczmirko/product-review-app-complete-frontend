@@ -1,5 +1,5 @@
 .navbar {
-    display: block;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #333;
@@ -12,9 +12,13 @@
     font-size: 16px;
     font-family: "Arial Narrow", sans-serif;
     text-transform: uppercase;
-    text-align: center;
     letter-spacing: 2px;
     margin: 0;
+}
+
+.navbar-logo {
+    right: 0px;
+    width:30px;
 }
 
 .navbar-items {
