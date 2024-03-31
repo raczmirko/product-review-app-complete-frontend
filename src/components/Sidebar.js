@@ -12,8 +12,8 @@ const Sidebar = () => {
 
   const sidebarOptions = [
       { icon: <CgHome />, text: 'Home', route: '/'},
-      { icon: <CgLogIn />, text: 'Login', route: '/' },
-      { icon: <CgUserAdd />, text: 'Register', route: 'user/register' }
+      { icon: <CgLogIn />, text: 'Login', route: '/login' },
+      { icon: <CgUserAdd />, text: 'Register', route: '/register' }
     ];
 
     return (

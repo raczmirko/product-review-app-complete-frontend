@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import Register from './pages/Register';
+import Login from './pages/Login';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState } from 'react';
@@ -22,10 +23,14 @@ const App = () => {
             <div className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/user/register" element={
-                            <><ParticleBackground backgroundColor="#0d47a1"/>
-                            <Register /></>
-                            }/>
+                <Route path="/login" element={
+                    <><ParticleBackground/>
+                    <Login /></>
+                    }/>
+                <Route path="/register" element={
+                    <><ParticleBackground/>
+                    <Register /></>
+                    }/>
               </Routes>
             </div>
           </div>
