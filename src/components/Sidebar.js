@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
 import { CgArrowRightR, CgArrowLeftR, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
-import logo from '../res/icon.png';
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
