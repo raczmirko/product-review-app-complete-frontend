@@ -11,7 +11,7 @@
 }
 
 .sidebar.expanded {
-  width: 20%; /* When expanded, set width to 20% */
+  width: 160px; /* When expanded, set width to 20% */
 }
 
 .sidebar button {
