@@ -3,7 +3,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import "../style/particles.css";
 
-const ParticleBackground = ({ backgroundColor }) => {
+const ParticleBackground = () => {
   const [init, setInit] = useState(false);
 
     // this should be run only once per application lifetime
@@ -26,7 +26,7 @@ const ParticleBackground = ({ backgroundColor }) => {
           () => ({
             background: {
               color: {
-                value: backgroundColor,
+                value: "#0d47a1",
               },
             },
             fpsLimit: 60,
