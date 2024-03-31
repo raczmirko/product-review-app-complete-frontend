@@ -23,7 +23,7 @@ const Login = () => {
             password: password
         };
 
-        fetch('http://localhost:8080/user/login', {
+        fetch('http://localhost:8080/authenticate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,6 +31,13 @@ const Login = () => {
             body: JSON.stringify(credentials)
         })
         .then(response => {
+            const authorizationHeader = response.headers.get("Authorization");
+            if (authorizationHeader) {
+                const token = authorizationHeader.split(' ')[1];
+                localStorage.setItem('token', token);
+            } else {
+                console.error('Authorization header not found.');
+            }
             if (!response.ok) {
                 const notificationText = "Login failed with an error code " + response.status;
                 console.log(response)
@@ -43,6 +50,7 @@ const Login = () => {
         })
         .then(data => {
             // TODO redirect on login
+
         })
         .catch(error => console.error('Error:', error));
     };
