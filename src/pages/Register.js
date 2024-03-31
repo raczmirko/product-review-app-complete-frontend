@@ -59,7 +59,7 @@ const Register = () => {
                     <label>Password:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit" className="button-confirm">Register</button>
             </form>
             {showNotification && (
                 <Notification
