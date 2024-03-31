@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
 import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
 
-const Sidebar = ({ isLoggedIn, logOut }) => {
+const Sidebar = ({ isLoggedIn, logOut, setNotification }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleSidebar = () => {
@@ -12,6 +12,10 @@ const Sidebar = ({ isLoggedIn, logOut }) => {
 
   const handleLogout = () => {
       logOut();
+  };
+
+  const showAlreadyLoggedInAlert = () => {
+    setNotification({ type: "info", title:"information", text: "You are already logged in!" });
   };
 
   const sidebarOptions = [
@@ -26,7 +30,7 @@ const Sidebar = ({ isLoggedIn, logOut }) => {
             <ul className="sidebar-items">
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
-                        <NavLink to={option.route}>
+                        <NavLink to={option.route} onClick={isLoggedIn && option.text === 'Login' ? showAlreadyLoggedInAlert : null}>
                             {option.icon}
                             {expanded && <span> {option.text}</span>}
                         </NavLink>

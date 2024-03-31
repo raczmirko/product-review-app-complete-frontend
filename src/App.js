@@ -49,7 +49,7 @@ const App = () => {
             />
         )}
         <div className="app">
-        <Sidebar isLoggedIn={isLoggedIn} logOut={logOut}/>
+        <Sidebar isLoggedIn={isLoggedIn} logOut={logOut} setNotification={setNotification}/>
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
