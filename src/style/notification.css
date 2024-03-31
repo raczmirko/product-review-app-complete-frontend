@@ -1,0 +1,49 @@
+.notification {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease-in-out forwards;
+  min-width: 20%;
+}
+
+.notification-title {
+    font-size: 14px;
+    font-family: "Arial Narrow", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.notification-button {
+    margin-top: 10px;
+    color: white;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%) translateX(-50%);
+  }
+  to {
+    transform: translateY(50%) translateX(-50%);
+  }
+}
+
+.success {
+  background-color: #5cb85c; /* Green */
+  color: white;
+}
+
+.error {
+  background-color: #d9534f; /* Red */
+  color: white;
+}
+
+.warning {
+  background-color: #f0ad4e; /* Orange */
+  color: white;
+}
