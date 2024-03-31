@@ -36,9 +36,9 @@ const Register = () => {
 
     return (
         <div className="registration-form">
-            <ParticleBackground />
             <h2>Create account</h2>
             <form onSubmit={handleRegistration}>
+                <ParticleBackground />
                 <div className="form-group">
                     <label>Username:</label>
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
