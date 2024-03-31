@@ -9,7 +9,7 @@ const Navbar = () => {
         Due the the justify:space-between CSS attribute */}
         <div></div>
         <h1 className="navbar-title">Product Review Application</h1>
-        <img className="navbar-logo" src="icon.png" alt="logo"/>
+        <img className="navbar-logo" src="/icon.png" alt="logo"/>
     </nav>
   );
 };
