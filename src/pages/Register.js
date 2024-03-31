@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../style/styles.css';
+import ParticleBackground from "../components/ParticleBackground.js";
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -35,6 +36,7 @@ const Register = () => {
 
     return (
         <div className="registration-form">
+            <ParticleBackground />
             <h2>Create account</h2>
             <form onSubmit={handleRegistration}>
                 <div className="form-group">
