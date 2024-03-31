@@ -1,39 +1,68 @@
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import ParticleBackground from "./components/ParticleBackground.js";
+import Notification from "./components/Notification";
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
 import './style/styles.css';
-import ParticleBackground from "./components/ParticleBackground.js";
 
 const App = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [notification, setNotification] = useState(false);
 
-      const toggleSidebar = () => {
+    const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
-      };
+    };
+
+    const handleShowNotification = () => {
+        setNotification(true);
+    };
+
+    const handleNotificationClose = () => {
+        setNotification(null);
+    };
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    };
 
     return (
         <Router>
         <Navbar />
-          <div className="app">
-            <Sidebar />
-            <div className="content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={
-                    <><ParticleBackground/>
-                    <Login /></>
-                    }/>
-                <Route path="/register" element={
-                    <><ParticleBackground/>
-                    <Register /></>
-                    }/>
-              </Routes>
-            </div>
-          </div>
+        {notification && (
+            <Notification
+                title={notification.title}
+                type={notification.type}
+                text={notification.text}
+                onClose={handleNotificationClose}
+            />
+        )}
+        <div className="app">
+        <Sidebar />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={
+                <>
+                    <ParticleBackground/>
+                    <Login onLogin={handleLogin}
+                        isLoggedIn={isLoggedIn}
+                        notification={handleShowNotification}
+                        setNotification={setNotification}
+                    />
+                </>
+                }/>
+            <Route path="/register" element={
+                <><ParticleBackground/>
+                <Register /></>
+                }/>
+          </Routes>
+        </div>
+        </div>
         </Router>
       );
 };

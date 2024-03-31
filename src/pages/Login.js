@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../style/styles.css';
 import Notification from "../components/Notification.js";
+import  { Navigate } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [showNotification, setNotification] = useState(false);
-
-    const handleShowNotification = () => {
-        setNotification(true);
-    };
-
-    const handleNotificationClose = () => {
-        setNotification(null);
-    };
 
     const handleRegistration = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
@@ -45,15 +37,18 @@ const Login = () => {
                 throw new Error('Login failed');
             }
             else {
-                setNotification({ type: "success", title:"SUCCESS", text: "Login successful!"});
+                setNotification({ type: "success", title:"success", text: "Successful login!"});
+                onLogin();
             }
         })
         .then(data => {
-            // TODO redirect on login
-
         })
         .catch(error => console.error('Error:', error));
     };
+
+    if (isLoggedIn) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <div className="login-form">
@@ -69,14 +64,6 @@ const Login = () => {
                 </div>
                 <button type="submit" className="button-confirm">Login</button>
             </form>
-            {showNotification && (
-                <Notification
-                    title={showNotification.title}
-                    type={showNotification.type}
-                    text={showNotification.text}
-                    onClose={handleNotificationClose}
-                />
-            )}
         </div>
     );
 };
