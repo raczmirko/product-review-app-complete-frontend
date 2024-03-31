@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import  { Navigate } from 'react-router-dom'
 import React, { useState } from 'react';
 import './style/styles.css';
 
@@ -30,6 +31,12 @@ const App = () => {
         setIsLoggedIn(true);
     };
 
+    const logOut = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        setNotification({ type: "success", title:"success", text: "Logged out successfully."});
+    };
+
     return (
         <Router>
         <Navbar />
@@ -42,7 +49,7 @@ const App = () => {
             />
         )}
         <div className="app">
-        <Sidebar />
+        <Sidebar isLoggedIn={isLoggedIn} logOut={logOut}/>
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />

@@ -3,11 +3,15 @@ import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
 import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
 
-const Sidebar = () => {
+const Sidebar = ({ isLoggedIn, logOut }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setExpanded(!expanded);
+  };
+
+  const handleLogout = () => {
+      logOut();
   };
 
   const sidebarOptions = [
@@ -31,10 +35,12 @@ const Sidebar = () => {
             </ul>
             <div className="sidebar-footer">
                 <div className="button-logout">
-                    <NavLink to="/logout">
-                        <CgLogOut />
-                        {expanded && <span> Log out</span>}
-                    </NavLink>
+                    {isLoggedIn &&
+                        <NavLink to="/" onClick={handleLogout}>
+                            <CgLogOut />
+                            {expanded && <span> Log out</span>}
+                        </NavLink>
+                    }
                 </div>
                 <div className="footer-watermark">
                     {expanded && <span>2024 © Mirkó Rácz</span>}
