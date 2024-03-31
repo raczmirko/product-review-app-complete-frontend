@@ -22,7 +22,10 @@ const App = () => {
             <div className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/user/register" element={<><ParticleBackground /><Register /></>} />
+                <Route path="/user/register" element={
+                            <><ParticleBackground backgroundColor="#0d47a1"/>
+                            <Register /></>
+                            }/>
               </Routes>
             </div>
           </div>
