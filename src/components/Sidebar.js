@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
-import { CgArrowRightR, CgArrowLeftR, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
+import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -18,8 +18,7 @@ const Sidebar = () => {
 
     return (
         <div className={`sidebar ${expanded ? 'expanded' : ''}`}>
-            {expanded && <button onClick={toggleSidebar}><CgArrowLeftR /></button>}
-            {!expanded && <button onClick={toggleSidebar}><CgArrowRightR /></button>}
+            <button onClick={toggleSidebar}><CgMenu /></button>
             <ul className="sidebar-items">
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
@@ -31,14 +30,14 @@ const Sidebar = () => {
                 ))}
             </ul>
             <div className="sidebar-footer">
-                <div>
+                <div className="button-logout">
                     <NavLink to="/logout">
                         <CgLogOut />
                         {expanded && <span> Log out</span>}
                     </NavLink>
                 </div>
                 <div className="footer-watermark">
-                    {expanded && <span>Created by Mirkó Rácz © 2024.</span>}
+                    {expanded && <span>2024 © Mirkó Rácz</span>}
                 </div>
             </div>
         </div>
