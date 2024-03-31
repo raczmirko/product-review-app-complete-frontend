@@ -37,7 +37,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
                 throw new Error('Login failed');
             }
             else {
-                setNotification({ type: "success", title:"success", text: "Successful login!"});
+                setNotification({ type: "success", title:"success", text: "Logged in successfully."});
                 onLogin();
             }
         })
