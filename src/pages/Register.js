@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../style/styles.css';
-import ParticleBackground from "../components/ParticleBackground.js";
 import Notification from "../components/Notification.js";
 
 const Register = () => {
@@ -50,7 +49,6 @@ const Register = () => {
 
     return (
         <div className="registration-form">
-            <ParticleBackground />
             <h2>Create account</h2>
             <form onSubmit={handleRegistration}>
                 <div className="form-group">

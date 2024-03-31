@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import './style/styles.css';
+import ParticleBackground from "./components/ParticleBackground.js";
 
 const App = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,7 +22,7 @@ const App = () => {
             <div className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/user/register" element={<Register />} />
+                <Route path="/user/register" element={<><ParticleBackground /><Register /></>} />
               </Routes>
             </div>
           </div>
