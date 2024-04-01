@@ -47,6 +47,14 @@ const Register = () => {
         }
     }
 
+    const getNotificationTextByStatusCode = (code) => {
+        let text = code + ": An error occurred, please try again later!";
+        if(code === 400) {
+            text = "400: This username is probably already in use.";
+        }
+        return text;
+    }
+
     const handleRegistration = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
@@ -64,17 +72,14 @@ const Register = () => {
         })
         .then(response => {
             if (!response.ok) {
-                const notificationText = "Registration failed with an error code " + response.status;
-                console.log(response)
+                const statusText = getNotificationTextByStatusCode(response.status);
+                const notificationText = "Registration failed with an error code " + statusText;
                 setNotification({ type: "error", title:"error", text: notificationText});
                 throw new Error('Registration failed');
             }
             else {
                 setNotification({ type: "success", title:"success", text: "Registration successful!"});
             }
-        })
-        .then(data => {
-            // TODO redirect on registration
         })
         .catch(error => console.error('Error:', error));
     };
