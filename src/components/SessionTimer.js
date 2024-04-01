@@ -16,7 +16,6 @@ const SessionTimer = ({ isLoggedIn, totalSeconds, functionToRunOnFinish }) => {
 
     useEffect(() => {
         let timer;
-
         if (isLoggedIn) {
             timer = setInterval(() => {
                 if(remainingSeconds === 0) {
@@ -31,7 +30,7 @@ const SessionTimer = ({ isLoggedIn, totalSeconds, functionToRunOnFinish }) => {
         }
 
         return () => clearInterval(timer);
-    }, [isLoggedIn, remainingSeconds]); // Include remainingSeconds in the dependency array
+    }, [isLoggedIn, remainingSeconds, functionToRunOnFinish]);
 
     return (
         <div className="session-timer">
