@@ -4,9 +4,10 @@ import '../style/sidebar.css';
 import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
 import { useSidebar } from './SidebarContext';
 
-const Sidebar = ({ isLoggedIn, logOut, setNotification}) => {
+const Sidebar = ({ isLoggedIn, logOut, setNotification }) => {
 
     const { isSidebarOpen, toggleSidebar } = useSidebar();
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         if (isSidebarOpen) {
@@ -15,6 +16,14 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification}) => {
           document.body.classList.remove('content-expanded');
         }
     }, [isSidebarOpen]);
+
+    useEffect(() => {
+        // Fetch the username from localStorage when the component mounts
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
 
     const handleLogout = () => {
         logOut();
@@ -52,6 +61,19 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification}) => {
                         </NavLink>
                     }
                 </div>
+                <div className="footer-login-name">
+                    {
+                        isSidebarOpen &&
+                        isLoggedIn &&
+                        <div>
+                            <div>
+                                <hr/>
+                                <span>Logged in as {username}</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <hr/>
                 <div className="footer-watermark">
                     {isSidebarOpen && <span>2024 © Mirkó Rácz</span>}
                 </div>

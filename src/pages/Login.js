@@ -41,6 +41,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
             if (authorizationHeader) {
                 const token = authorizationHeader.split(' ')[1];
                 localStorage.setItem('token', token);
+                localStorage.setItem('username', username);
             } else {
                 console.error('Authorization header not found.');
             }
