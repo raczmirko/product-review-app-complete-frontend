@@ -26,7 +26,7 @@ const CountrySelector = ({ onSelect }) => {
     }, []);
 
     return (
-        <div className="country-selector form-group">
+        <div className="country-selector">
             <select onChange={(e) => onSelect(countries[e.target.selectedIndex - 1])}>
                 <option value="">Select a country</option>
                 {countries.map(country => (
