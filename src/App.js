@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import { SidebarProvider } from './components/SidebarContext';
 import ParticleBackground from "./components/ParticleBackground.js";
 import Notification from "./components/Notification";
 import Register from './pages/Register';
@@ -14,10 +15,7 @@ const App = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notification, setNotification] = useState(false);
-
-    const toggleSidebar = () => {
-        setSidebarOpen(!sidebarOpen);
-    };
+    const [contentState, setContentState] = useState("content");
 
     const handleShowNotification = () => {
         setNotification(true);
@@ -49,8 +47,10 @@ const App = () => {
             />
         )}
         <div className="app">
-        <Sidebar isLoggedIn={isLoggedIn} logOut={logOut} setNotification={setNotification}/>
-        <div className="content">
+        <SidebarProvider>
+            <Sidebar isLoggedIn={isLoggedIn} logOut={logOut} setNotification={setNotification}/>
+        </SidebarProvider>
+        <div className={contentState}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={

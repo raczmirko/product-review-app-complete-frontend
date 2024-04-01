@@ -1,38 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
 import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
+import { useSidebar } from './SidebarContext';
 
-const Sidebar = ({ isLoggedIn, logOut, setNotification }) => {
-  const [expanded, setExpanded] = useState(false);
+const Sidebar = ({ isLoggedIn, logOut, setNotification}) => {
 
-  const toggleSidebar = () => {
-    setExpanded(!expanded);
-  };
+    const { isSidebarOpen, toggleSidebar } = useSidebar();
 
-  const handleLogout = () => {
-      logOut();
-  };
+    useEffect(() => {
+        if (isSidebarOpen) {
+            document.body.classList.add('content-expanded');
+        } else {
+          document.body.classList.remove('content-expanded');
+        }
+    }, [isSidebarOpen]);
 
-  const showAlreadyLoggedInAlert = () => {
-    setNotification({ type: "info", title:"information", text: "You are already logged in!" });
-  };
+    const handleLogout = () => {
+        logOut();
+    };
 
-  const sidebarOptions = [
-      { icon: <CgHome />, text: 'Home', route: '/'},
-      { icon: <CgLogIn />, text: 'Login', route: '/login' },
-      { icon: <CgUserAdd />, text: 'Register', route: '/register' }
+    const showAlreadyLoggedInAlert = () => {
+        setNotification({ type: "info", title:"information", text: "You are already logged in!" });
+    };
+
+    const sidebarOptions = [
+        { icon: <CgHome />, text: 'Home', route: '/'},
+        { icon: <CgLogIn />, text: 'Login', route: '/login' },
+        { icon: <CgUserAdd />, text: 'Register', route: '/register' }
     ];
 
     return (
-        <div className={`sidebar ${expanded ? 'expanded' : ''}`}>
+        <div className={`sidebar ${isSidebarOpen ? 'expanded' : ''}`}>
             <button onClick={toggleSidebar}><CgMenu /></button>
             <ul className="sidebar-items">
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
                         <NavLink to={option.route} onClick={isLoggedIn && option.text === 'Login' ? showAlreadyLoggedInAlert : null}>
                             {option.icon}
-                            {expanded && <span> {option.text}</span>}
+                            {isSidebarOpen && <span> {option.text}</span>}
                         </NavLink>
                     </li>
                 ))}
@@ -42,12 +48,12 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification }) => {
                     {isLoggedIn &&
                         <NavLink to="/" onClick={handleLogout}>
                             <CgLogOut />
-                            {expanded && <span> Log out</span>}
+                            {isSidebarOpen && <span> Log out</span>}
                         </NavLink>
                     }
                 </div>
                 <div className="footer-watermark">
-                    {expanded && <span>2024 © Mirkó Rácz</span>}
+                    {isSidebarOpen && <span>2024 © Mirkó Rácz</span>}
                 </div>
             </div>
         </div>
