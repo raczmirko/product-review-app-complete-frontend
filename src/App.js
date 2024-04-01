@@ -7,12 +7,10 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import  { Navigate } from 'react-router-dom'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './style/styles.css';
 
 const App = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notification, setNotification] = useState(false);
     const [contentState, setContentState] = useState("content");
