@@ -7,7 +7,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegistration = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
         const credentials = {
@@ -53,7 +53,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
     return (
         <div className="login-form">
             <h2>Log in to your account</h2>
-            <form onSubmit={handleRegistration}>
+            <form onSubmit={handleLogin}>
                 <div className="form-group">
                     <label>Username:</label>
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required/>
