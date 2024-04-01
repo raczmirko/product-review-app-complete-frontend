@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import  { Navigate } from 'react-router-dom'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/styles.css';
 
 const App = () => {
@@ -16,6 +16,7 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notification, setNotification] = useState(false);
     const [contentState, setContentState] = useState("content");
+    const [remainingSessionSeconds, setRemainingSessionSeconds] = useState(0);
 
     const handleShowNotification = () => {
         setNotification(true);
@@ -27,17 +28,41 @@ const App = () => {
 
     const handleLogin = () => {
         setIsLoggedIn(true);
+        fetchSessionLength();
+    };
+
+    const fetchSessionLength = async () => {
+        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+        try {
+            const response = await fetch('http://localhost:8080/security/session-second', { headers });
+            if (!response.ok) {
+                throw new Error('Failed to fetch session expiry time.');
+            }
+            const data = await response.json();
+            setRemainingSessionSeconds(data);
+            return;
+        } catch (error) {
+            console.error('Error fetching session length:', error);
+            return []; // Return an empty array if an error occurs
+        }
     };
 
     const logOut = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
         setIsLoggedIn(false);
-        setNotification({ type: "success", title:"success", text: "Logged out successfully."});
+        setNotification({ type: "success", title:"success", text: "You have been logged out."});
     };
 
     return (
         <Router>
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn}
+                remainingSeconds={remainingSessionSeconds}
+                logOut={logOut}
+        />
         {notification && (
             <Notification
                 title={notification.title}
@@ -48,7 +73,11 @@ const App = () => {
         )}
         <div className="app">
         <SidebarProvider>
-            <Sidebar isLoggedIn={isLoggedIn} logOut={logOut} setNotification={setNotification}/>
+            <Sidebar    isLoggedIn={isLoggedIn}
+                        logOut={logOut}
+                        setNotification={setNotification}
+                        remainingSessionSeconds={remainingSessionSeconds}
+            />
         </SidebarProvider>
         <div className={contentState}>
           <Routes>

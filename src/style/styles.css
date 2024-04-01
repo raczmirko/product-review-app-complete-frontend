@@ -83,3 +83,9 @@ body {
     outline: none;
     border-color: #0056b3;
 }
+
+.session-timer {
+    display:flex;
+    align-items: center;
+    font-size:28px;
+}
