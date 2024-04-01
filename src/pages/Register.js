@@ -50,7 +50,7 @@ const Register = () => {
     const getNotificationTextByStatusCode = (code) => {
         let text = code + ": An error occurred, please try again later!";
         if(code === 400) {
-            text = "400: This username is probably already in use.";
+            text = code + ": This username is probably already in use.";
         }
         return text;
     }
