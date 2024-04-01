@@ -27,9 +27,9 @@ const App = () => {
         setNotification(null);
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        await fetchSessionLengthAndUsername();
         setIsLoggedIn(true);
-        fetchSessionLengthAndUsername();
     };
 
     const fetchSessionLengthAndUsername = async () => {
