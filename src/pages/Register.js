@@ -79,6 +79,10 @@ const Register = () => {
             }
             else {
                 setNotification({ type: "success", title:"success", text: "Registration successful!"});
+                //Clear form fields upon registration
+                setUsername('');
+                setPassword('');
+                setPasswordAgain('');
             }
         })
         .catch(error => console.error('Error:', error));
