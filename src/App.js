@@ -54,7 +54,7 @@ const App = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         setIsLoggedIn(false);
-        setNotification({ type: "success", title:"success", text: "You have been logged out."});
+        setNotification({ type: "info", title:"information", text: "You have been logged out."});
     };
 
     return (
