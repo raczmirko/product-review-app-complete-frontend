@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
-import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd } from "react-icons/cg";
+import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd, CgShoppingBag } from "react-icons/cg";
 import { useSidebar } from './SidebarContext';
 
 const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
@@ -25,9 +25,10 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
     };
 
     const sidebarOptions = [
-        { icon: <CgHome />, text: 'Home', route: '/'},
-        { icon: <CgLogIn />, text: 'Login', route: '/login' },
-        { icon: <CgUserAdd />, text: 'Register', route: '/register' }
+        { icon: <CgHome />, text: 'Home', route: '/', visibleWithoutLogin: true},
+        { icon: <CgLogIn />, text: 'Login', route: '/login', visibleWithoutLogin: true },
+        { icon: <CgUserAdd />, text: 'Register', route: '/register', visibleWithoutLogin: true },
+        { icon: <CgShoppingBag />, text: 'Brands', route: '/brand', visibleWithoutLogin: false }
     ];
 
     return (
@@ -36,10 +37,13 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
             <ul className="sidebar-items">
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
-                        <NavLink to={option.route} onClick={isLoggedIn && option.text === 'Login' ? showAlreadyLoggedInAlert : null}>
-                            {option.icon}
-                            {isSidebarOpen && <span> {option.text}</span>}
-                        </NavLink>
+                        {
+                            (isLoggedIn || !isLoggedIn && option.visibleWithoutLogin) &&
+                            <NavLink to={option.route} onClick={isLoggedIn && option.text === 'Login' ? showAlreadyLoggedInAlert : null}>
+                                {option.icon}
+                                {isSidebarOpen && <span> {option.text}</span>}
+                            </NavLink>
+                        }
                     </li>
                 ))}
             </ul>
