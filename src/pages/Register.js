@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import '../style/styles.css';
 import Notification from "../components/Notification.js";
+import CountrySelector from "../components/CountrySelector.js";
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordAgain, setPasswordAgain] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
     const [showNotification, setNotification] = useState(false);
 
     const handleShowNotification = () => {
@@ -14,6 +16,10 @@ const Register = () => {
 
     const handleNotificationClose = () => {
         setNotification(null);
+    };
+
+    const handleCountrySelect = (selectedCountry) => {
+        setSelectedCountry(selectedCountry);
     };
 
     const checkPasswordValidity = (e) => {
@@ -60,7 +66,8 @@ const Register = () => {
 
         const credentials = {
             username: username,
-            password: password
+            password: password,
+            country: selectedCountry
         };
 
         fetch('http://localhost:8080/user/register', {
@@ -83,6 +90,7 @@ const Register = () => {
                 setUsername('');
                 setPassword('');
                 setPasswordAgain('');
+                setSelectedCountry('');
             }
         })
         .catch(error => console.error('Error:', error));
@@ -103,6 +111,10 @@ const Register = () => {
                 <div className="form-group">
                     <label>Password again:</label>
                     <input type="password" value={passwordAgain} onChange={(e) => setPasswordAgain(e.target.value)} required/>
+                </div>
+                <div className="form-group">
+                    <label>Country:</label>
+                    <CountrySelector onSelect={handleCountrySelect} />
                 </div>
                 <button type="submit" className="button-confirm">Register</button>
             </form>
