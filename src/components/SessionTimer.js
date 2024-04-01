@@ -19,7 +19,7 @@ const SessionTimer = ({ isLoggedIn, totalSeconds, functionToRunOnFinish }) => {
 
         if (isLoggedIn) {
             timer = setInterval(() => {
-                if(remainingSeconds == 0) {
+                if(remainingSeconds === 0) {
                     functionToRunOnFinish();
                     return;
                 }
