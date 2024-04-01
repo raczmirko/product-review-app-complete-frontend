@@ -16,6 +16,7 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notification, setNotification] = useState(false);
     const [contentState, setContentState] = useState("content");
+    const [username, setUsername] = useState("");
     const [remainingSessionSeconds, setRemainingSessionSeconds] = useState(0);
 
     const handleShowNotification = () => {
@@ -28,11 +29,12 @@ const App = () => {
 
     const handleLogin = () => {
         setIsLoggedIn(true);
-        fetchSessionLength();
+        fetchSessionLengthAndUsername();
     };
 
-    const fetchSessionLength = async () => {
+    const fetchSessionLengthAndUsername = async () => {
         const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+        setUsername(localStorage.getItem('username'));
         const headers = {
             'Authorization': `Bearer ${token}`
         };
@@ -76,7 +78,7 @@ const App = () => {
             <Sidebar    isLoggedIn={isLoggedIn}
                         logOut={logOut}
                         setNotification={setNotification}
-                        remainingSessionSeconds={remainingSessionSeconds}
+                        username={username}
             />
         </SidebarProvider>
         <div className={contentState}>
