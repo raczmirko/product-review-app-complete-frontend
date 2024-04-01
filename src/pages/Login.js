@@ -7,6 +7,20 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const getNotificationTextByStatusCode = (code) => {
+        let text = code + ": An error occurred, please try again later!";
+        if(code === 400) {
+            text = code + ": Bad request.";
+        }
+        if(code === 401) {
+            text = code + ": You provided an incorrect password.";
+        }
+        if(code === 404) {
+            text = code + ": This user does not exist.";
+        }
+        return text;
+    }
+
     const handleLogin = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
@@ -31,7 +45,8 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
                 console.error('Authorization header not found.');
             }
             if (!response.ok) {
-                const notificationText = "Login failed with an error code " + response.status;
+                const statusText = getNotificationTextByStatusCode(response.status);
+                const notificationText = "Login failed with an error code " + statusText;
                 console.log(response)
                 setNotification({ type: "error", title:"ERROR", text: notificationText});
                 throw new Error('Login failed');
