@@ -89,3 +89,13 @@ body {
     align-items: center;
     font-size:28px;
 }
+
+.page-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  font-family: "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
