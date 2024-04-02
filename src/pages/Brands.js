@@ -1,9 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
 import SearchBar from "../components/SearchBar";
+import DynamicTable from "../components/DynamicTable";
 import "../style/styles.css";
 
 const Brands = () => {
-    const brands = [];
+    const [brands, setBrands] = useState([]);
+
     const fetchBrands = async () => {
             const token = localStorage.getItem('token'); // Retrieve the token from localStorage
             const headers = {
@@ -15,7 +18,7 @@ const Brands = () => {
                     throw new Error('Failed to fetch brands.');
                 }
                 const data = await response.json();
-                console.log(data);
+                setBrands(data);
                 return;
             } catch (error) {
                 console.error('Error fetching session length:', error);
@@ -23,11 +26,22 @@ const Brands = () => {
             }
         };
 
+    useEffect(() => {
+        fetchBrands(); // Call fetchBrands when the component mounts
+    }, []);
+
+    const transformedBrands = brands.map(brand => ({
+        id: brand.id,
+        name: brand.name,
+        countryOfOrigin: brand.countryOfOrigin.name,
+        description: brand.description
+    }));
 
     return (
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
             <SearchBar />
+            <DynamicTable data={transformedBrands} />
         </div>
       );
 };
