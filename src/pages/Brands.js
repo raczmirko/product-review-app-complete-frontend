@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar";
 import DynamicTable from "../components/DynamicTable";
 import "../style/styles.css";
 
-const Brands = () => {
+const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
 
     const fetchBrands = async () => {
@@ -26,6 +26,36 @@ const Brands = () => {
             }
         };
 
+    const deleteBrand = async (id) => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/brand/${id}/delete`, {
+                method: 'POST',
+                headers,
+            });
+
+            if (!response.ok) {
+                const errorMessage = 'Failed to delete brand.';
+                setNotification({ type: "error", title:"error", text: errorMessage});
+                throw new Error(errorMessage);
+            }
+            fetchBrands();
+            setNotification({ type: "success", title:"success", text: "Brand successfully deleted."});
+            return;
+        } catch (error) {
+            console.error('Error deleting brand:', error);
+            setNotification({ type: "error", title:"error", text: error});
+            return []; // Return an empty array if an error occurs
+        }
+    };
+
+    const modifyBrand = async () => {};
+
     useEffect(() => {
         fetchBrands(); // Call fetchBrands when the component mounts
     }, []);
@@ -41,7 +71,7 @@ const Brands = () => {
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
             <SearchBar />
-            <DynamicTable data={transformedBrands} />
+            <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
         </div>
       );
 };
