@@ -59,7 +59,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
         })
         .then(data => {
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => setNotification({ type: "error", title:"ERROR", text: "Problem occurred when trying to communicate with the server."}));
     };
 
     if (isLoggedIn) {
