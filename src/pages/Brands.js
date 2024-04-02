@@ -7,6 +7,23 @@ import "../style/styles.css";
 const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
 
+    const getNotificationTextByStatusCode = (code) => {
+        let text = code + ": An error occurred, please try again later!";
+        if(code === 400) {
+            text = code + ": Bad request.";
+        }
+        if(code === 401) {
+            text = code + ": Authentication failed. Log in again!";
+        }
+        if(code === 403) {
+            text = code + ": You cannot access this page. Your session might have expired or you might need admin privileges to view.";
+        }
+        if(code === 404) {
+            text = code + ": NOT FOUND.";
+        }
+        return text;
+    }
+
     const fetchBrands = async () => {
         const token = localStorage.getItem('token'); // Retrieve the token from localStorage
         const headers = {
@@ -14,14 +31,17 @@ const Brands = ({ setNotification }) => {
         };
         try {
             const response = await fetch('http://localhost:8080/brand/all', { headers });
+            const errorMessage = getNotificationTextByStatusCode(response.status);
             if (!response.ok) {
-                throw new Error('Failed to fetch brands.');
+                setNotification({ type: "error", title:"error", text: "Failed to fetch brands with an error code " + errorMessage});
+                throw new Error(errorMessage);
             }
             const data = await response.json();
             setBrands(data);
             return;
         } catch (error) {
-            console.error('Error fetching session length:', error);
+            console.error('Error fetching brands:', error);
+            setNotification({ type: "error", title:"error", text: error});
             return []; // Return an empty array if an error occurs
         }
     };
@@ -36,6 +56,34 @@ const Brands = ({ setNotification }) => {
         try {
             const response = await fetch(`http://localhost:8080/brand/${id}/delete`, {
                 method: 'POST',
+                headers,
+            });
+            const errorMessage = getNotificationTextByStatusCode(response.status);
+            if (!response.ok) {
+                setNotification({ type: "error", title:"error", text: "Failed to delete brand with an error code " + errorMessage});
+                throw new Error(errorMessage);
+            }
+            fetchBrands();
+            setNotification({ type: "success", title:"success", text: "Brand successfully deleted."});
+            return;
+        } catch (error) {
+            setNotification({ type: "error", title:"error", text: error});
+            return []; // Return an empty array if an error occurs
+        }
+    };
+
+    const modifyBrand = async () => {};
+
+    const searchBrands = async () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/brand/search/`, {
+                method: 'GET',
                 headers,
             });
 
@@ -53,8 +101,6 @@ const Brands = ({ setNotification }) => {
             return []; // Return an empty array if an error occurs
         }
     };
-
-    const modifyBrand = async () => {};
 
     useEffect(() => {
         fetchBrands(); // Call fetchBrands when the component mounts
