@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CgTrash } from "react-icons/cg";
 import "../style/table.css";
 
-const DynamicTable = ({ data }) => {
+const DynamicTable = ({ data, deleteFunction }) => {
     const [tableData, setTableData] = useState(data);
 
       if (!data || data.length === 0) {
@@ -25,7 +25,7 @@ const DynamicTable = ({ data }) => {
         };
 
         const handleDelete = id => {
-            console.log('deleting: ' + id)
+            deleteFunction(id);
             const updatedData = tableData.filter(item => item.id !== id);
             setTableData(updatedData);
         };
