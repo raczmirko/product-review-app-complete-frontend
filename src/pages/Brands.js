@@ -33,7 +33,7 @@ const Brands = () => {
     const transformedBrands = brands.map(brand => ({
         id: brand.id,
         name: brand.name,
-        countryOfOrigin: brand.countryOfOrigin.name,
+        nationality: brand.countryOfOrigin.name,
         description: brand.description
     }));
 
