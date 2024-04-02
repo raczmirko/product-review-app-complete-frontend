@@ -17,6 +17,7 @@
     border-radius: 4px;
     overflow: hidden;
     height:50px;
+    width:33%;
 }
 
 .search-input input {
@@ -32,4 +33,24 @@
     cursor: pointer;
     height:50px;
     width: 50px;
+}
+
+.search-display {
+    display: flex;
+    justify-content: space-between;
+    width:33%;
+    height:50px;
+}
+
+.search-display button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.search-selector {
+    width:33%;
+    height: 50px;
+}
+
+.search-selector select {
+    padding: 12px;
 }
