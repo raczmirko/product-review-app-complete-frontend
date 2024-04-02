@@ -1,25 +1,64 @@
 import React, { useState } from 'react';
-import { CgSearch, CgDisplayGrid, CgList, CgRedo, CgAddR, CgMore, CgErase } from "react-icons/cg";
+import { CgSearch, CgDisplayGrid, CgList, CgRedo, CgAddR, CgMore, CgErase, CgArrowDown, CgArrowUp } from "react-icons/cg";
 import '../style/searchbar.css';
 import '../style/styles.css';
 
-const SearchBar = ({ searchFunction, filterList, setFilter, addFunction }) => {
+const SearchBar = ({    searchFunction,
+                        columnList,
+                        setFilter,
+                        addFunction,
+                        setSearchText,
+                        setSearchColumn,
+                        setPageSize,
+                        setOrderByColumn,
+                        setOrderByDirection
+                                                }) => {
     const [advancedSearch, setAdvancedSearch] = useState(false);
+    const [searchInput, setSearchInput] = useState('');
+    const [orderAsc, setOrderAsc] = useState(true);
 
     const toggleAdvancedSearch = () => {
         setAdvancedSearch(!advancedSearch);
+    }
+    const toggleOrderAsc = () => {
+        setOrderAsc(!orderAsc);
+        setOrderByDirection(orderAsc ? 'ASC' : 'DESC');
+    }
+
+    const handleInputChange = (event) => {
+        const searchText = event.target.value; // Get the value of the input field
+        setSearchText(searchText); // Pass the value to setSearchText
+        setSearchInput(searchText); // Update the local state with the new value
+    };
+
+    const resetFilters = () => {
+        setOrderAsc(true);
+        setSearchText(""); // Reset search text
+        setSearchInput("");
+        setSearchColumn(""); // Reset search column
+        setPageSize(""); // Reset page size
+        setOrderByColumn(""); // Reset order by column
+        setOrderByDirection(""); // Reset order by direction
+        // Reset select elements to their initial or default values (if controlled)
+        const selectElements = document.querySelectorAll('.search-selector select');
+        selectElements.forEach(select => {
+            select.selectedIndex = 0;
+        });
     }
 
     return (
         <div>
             <div className="search-bar">
                 <div className="search-input">
-                    <input onChange={searchFunction} type="text" placeholder="Search..." />
-                    <button><CgSearch /></button>
+                    <input value={searchInput} onChange={handleInputChange} type="text" placeholder="Search..." />
+                    <button onClick={searchFunction} ><CgSearch /></button>
                 </div>
                 <div className="selector search-selector">
-                    <select onChange={(e) => setFilter(filterList[e.target.selectedIndex - 1])}>
-                        <option value="">Select a filter</option>
+                    <select onChange={(e) => setSearchColumn(e.target.value)}>
+                        <option value="" disabled selected>Select a filter</option>
+                        {columnList.map(column => (
+                            <option key={column} value={column}>{column}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="search-display">
@@ -31,17 +70,26 @@ const SearchBar = ({ searchFunction, filterList, setFilter, addFunction }) => {
             { advancedSearch &&
                 <div className="search-bar search-bar-advanced">
                     <div className="selector search-selector">
-                        <select onChange={(e) => setFilter(filterList[e.target.selectedIndex - 1])}>
-                            <option value="">Maximum results per page</option>
+                        <select onChange={(e) => setPageSize(e.target.value)}>
+                            <option value="" disabled selected>Page size</option>
+                            <option value="6">page size: 10</option>
+                            <option value="12">page size: 25</option>
+                            <option value="24">page size: 50</option>
+                            <option value="48">page size: 100</option>
                         </select>
                     </div>
                     <div className="selector search-selector">
-                        <select onChange={(e) => setFilter(filterList[e.target.selectedIndex - 1])}>
-                            <option value="">Order by</option>
+                        <select onChange={(e) => setOrderByColumn(e.target.value)}>
+                            <option value="" disabled selected>Order by</option>
+                            {columnList.map(column => (
+                                <option key={column} value={column}>{column}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="search-display">
-                        <button title="Reset Filters"><CgErase /></button>
+                        {!orderAsc && <button onClick={toggleOrderAsc} title="ASCENDING"><CgArrowDown /></button>}
+                        {orderAsc && <button onClick={toggleOrderAsc} title="DESCENDING"><CgArrowUp /></button>}
+                        <button className="button-delete" onClick={resetFilters} title="Reset Filters"><CgErase /></button>
                         <button title="Display mode: CARDS"><CgDisplayGrid  /></button>
                         <button title="Display mode: TABLE"><CgList /></button>
                     </div>

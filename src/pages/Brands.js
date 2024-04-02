@@ -6,6 +6,12 @@ import "../style/styles.css";
 
 const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
+    const [columnList, setColumnList] = useState(['name', 'country', 'description'])
+    const [searchText, setSearchText] = useState('');
+    const [searchColumn, setSearchColumn] = useState('');
+    const [pageSize, setPageSize] = useState(12);
+    const [orderByColumn, setOrderByColumn] = useState('');
+    const [orderByDirection, setOrderByDirection] = useState('ASC');
 
     const getNotificationTextByStatusCode = (code) => {
         let text = code + ": An error occurred, please try again later!";
@@ -116,7 +122,15 @@ const Brands = ({ setNotification }) => {
     return (
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
-            <SearchBar searchFunction={fetchBrands}/>
+            <SearchBar
+                searchFunction={fetchBrands}
+                columnList={columnList}
+                setSearchText={setSearchText}
+                setSearchColumn={setSearchColumn}
+                setPageSize={setPageSize}
+                setOrderByColumn={setOrderByColumn}
+                setOrderByDirection={setOrderByDirection}
+            />
             <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
         </div>
       );
