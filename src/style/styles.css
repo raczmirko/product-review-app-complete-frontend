@@ -44,6 +44,10 @@ button:hover {
     background-color: green;
 }
 
+.button-delete {
+    background-color: red;
+}
+
 .content {
     margin-left: 70px;
     padding: 10px;
