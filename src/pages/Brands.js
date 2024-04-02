@@ -1,4 +1,5 @@
 import PageHeader from "../components/PageHeader";
+import SearchBar from "../components/SearchBar";
 import "../style/styles.css";
 
 const Brands = () => {
@@ -26,6 +27,7 @@ const Brands = () => {
     return (
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
+            <SearchBar />
         </div>
       );
 };
