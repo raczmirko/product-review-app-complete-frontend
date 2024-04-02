@@ -1,4 +1,5 @@
 import React from 'react';
+import "../style/table.css";
 
 const DynamicTable = ({ data }) => {
   if (!data || data.length === 0) {
@@ -9,7 +10,7 @@ const DynamicTable = ({ data }) => {
   const columnNames = Object.keys(data[0]);
 
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           {/* Render table headers with column names */}

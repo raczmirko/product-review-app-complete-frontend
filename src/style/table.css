@@ -1,0 +1,16 @@
+.table {
+    font-size: 26px;
+    width: 100%;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 8px;
+    font-family: "Arial Narrow", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
