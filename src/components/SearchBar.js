@@ -26,19 +26,19 @@ const SearchBar = ({    searchFunction,
     }
 
     const handleInputChange = (event) => {
-        const searchText = event.target.value; // Get the value of the input field
-        setSearchText(searchText); // Pass the value to setSearchText
-        setSearchInput(searchText); // Update the local state with the new value
+        const searchText = event.target.value;
+        setSearchText(searchText);
+        setSearchInput(searchText);
     };
 
     const resetFilters = () => {
         setOrderAsc(true);
-        setSearchText(""); // Reset search text
+        setSearchText("");
         setSearchInput("");
-        setSearchColumn(""); // Reset search column
-        setPageSize(""); // Reset page size
-        setOrderByColumn(""); // Reset order by column
-        setOrderByDirection(""); // Reset order by direction
+        setSearchColumn("");
+        setPageSize("");
+        setOrderByColumn("");
+        setOrderByDirection("");
         // Reset select elements to their initial or default values (if controlled)
         const selectElements = document.querySelectorAll('.search-selector select');
         selectElements.forEach(select => {
