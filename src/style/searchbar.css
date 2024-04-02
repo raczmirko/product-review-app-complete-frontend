@@ -11,6 +11,10 @@
   transition: top 0.3s ease; /* Add transition for smooth movement */
 }
 
+.search-bar-advanced {
+  padding-top: 0px;
+}
+
 .search-input {
     display: flex;
     align-items: center;
