@@ -44,6 +44,10 @@ button:hover {
     background-color: green;
 }
 
+.button-orange {
+    background-color: orange;
+}
+
 .button-delete {
     background-color: red;
 }

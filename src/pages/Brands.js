@@ -8,23 +8,23 @@ const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
 
     const fetchBrands = async () => {
-            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-            const headers = {
-                'Authorization': `Bearer ${token}`
-            };
-            try {
-                const response = await fetch('http://localhost:8080/brand/all', { headers });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch brands.');
-                }
-                const data = await response.json();
-                setBrands(data);
-                return;
-            } catch (error) {
-                console.error('Error fetching session length:', error);
-                return []; // Return an empty array if an error occurs
-            }
+        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
+        try {
+            const response = await fetch('http://localhost:8080/brand/all', { headers });
+            if (!response.ok) {
+                throw new Error('Failed to fetch brands.');
+            }
+            const data = await response.json();
+            setBrands(data);
+            return;
+        } catch (error) {
+            console.error('Error fetching session length:', error);
+            return []; // Return an empty array if an error occurs
+        }
+    };
 
     const deleteBrand = async (id) => {
         const token = localStorage.getItem('token');
@@ -70,7 +70,7 @@ const Brands = ({ setNotification }) => {
     return (
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
-            <SearchBar />
+            <SearchBar searchFunction={fetchBrands}/>
             <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
         </div>
       );
