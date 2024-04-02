@@ -10,10 +10,6 @@
   transition: top 0.3s ease; /* Add transition for smooth movement */
 }
 
-.search-bar.advanced-open {
-    top: 140px; /* Slide down when advanced mode is open */
-}
-
 .search-input {
     display: flex;
     align-items: center;
@@ -36,12 +32,4 @@
     cursor: pointer;
     height:50px;
     width: 50px;
-}
-
-.advanced-btn {
-  height:50px;
-}
-
-.advanced-options {
-  margin-top: 10px;
 }
