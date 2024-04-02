@@ -16,7 +16,7 @@ const App = () => {
     const [notification, setNotification] = useState(false);
     const [contentState, setContentState] = useState("content");
     const [username, setUsername] = useState("");
-    const [remainingSessionSeconds, setRemainingSessionSeconds] = useState(0);
+    const [expiryTime, setExpiryTime] = useState(null);
 
     const handleShowNotification = () => {
         setNotification(true);
@@ -43,7 +43,7 @@ const App = () => {
                 throw new Error('Failed to fetch session expiry time.');
             }
             const data = await response.json();
-            setRemainingSessionSeconds(data);
+            setExpiryTime(new Date().getTime() + data * 1000);
             return;
         } catch (error) {
             console.error('Error fetching session length:', error);
@@ -61,7 +61,7 @@ const App = () => {
     return (
         <Router>
         <Navbar isLoggedIn={isLoggedIn}
-                remainingSeconds={remainingSessionSeconds}
+                expiryTime={expiryTime}
                 logOut={logOut}
         />
         {notification && (
@@ -99,7 +99,7 @@ const App = () => {
                     <Register />
                 </>
                 }/>
-            <Route path="/brand" element={<Brands />} />
+            <Route path="/brand" element={<Brands setNotification={setNotification}/>} />
           </Routes>
         </div>
         </div>
