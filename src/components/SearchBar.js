@@ -21,6 +21,8 @@ const SearchBar = ({    searchFunction,
 
      const handleSearch = (text) => {
          setSearchText(text);
+         setTextInput(text);
+         searchFunction();
      }
 
      const handlePageSizeChange = (value) => {
@@ -78,7 +80,7 @@ const SearchBar = ({    searchFunction,
                 </div>
                 <div className="search-display">
                     <button title="Advanced Options" onClick={() => toggleAdvancedSearch()}><CgMore /></button>
-                    <button title="Refresh" className="button-orange" onClick={() => searchFunction()}><CgRedo /></button>
+                    <button title="Reset filters" className="button-delete" onClick={() => eraseFilters()} title="Reset Filters"><CgErase /></button>
                     <button title="Add new" className="button-confirm"><CgAddR /></button>
                 </div>
             </div>
@@ -108,9 +110,9 @@ const SearchBar = ({    searchFunction,
                         </select>
                     </div>
                     <div className="search-display">
-                        {!orderAsc && <button onClick={() => toggleOrderAsc()} title="DESCENDING"><CgArrowDown /></button>}
-                        {orderAsc && <button onClick={() => toggleOrderAsc()} title="ASCENDING"><CgArrowUp /></button>}
-                        <button className="button-delete" onClick={() => eraseFilters()} title="Reset Filters"><CgErase /></button>
+                        {!orderAsc && <button title="DESCENDING" onClick={() => toggleOrderAsc()} ><CgArrowDown /></button>}
+                        {orderAsc && <button title="ASCENDING" onClick={() => toggleOrderAsc()} ><CgArrowUp /></button>}
+                        <button title="Refresh" className="button-orange" onClick={() => searchFunction()}><CgRedo /></button>
                         <button title="Display mode: CARDS"><CgDisplayGrid  /></button>
                         <button title="Display mode: TABLE"><CgList /></button>
                     </div>
