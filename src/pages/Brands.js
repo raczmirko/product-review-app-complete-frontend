@@ -3,15 +3,18 @@ import PageHeader from "../components/PageHeader";
 import SearchBar from "../components/SearchBar";
 import DynamicTable from "../components/DynamicTable";
 import "../style/styles.css";
+import { CgChevronRight , CgChevronLeft } from "react-icons/cg";
 
 const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
-    const [columnList, setColumnList] = useState(['name', 'country', 'description'])
-    const [searchText, setSearchText] = useState('');
+    const [columnList, setColumnList] = useState(['name', 'countryOfOrigin', 'description'])
     const [searchColumn, setSearchColumn] = useState('');
+    const [searchText, setSearchText] = useState('');
     const [pageSize, setPageSize] = useState(12);
-    const [orderByColumn, setOrderByColumn] = useState('');
-    const [orderByDirection, setOrderByDirection] = useState('ASC');
+    const [pageNumber, setPageNumber] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [orderByColumn, setOrderByColumn] = useState('name');
+    const [orderByDirection, setOrderByDirection] = useState("ASC");
 
     const getNotificationTextByStatusCode = (code) => {
         let text = code + ": An error occurred, please try again later!";
@@ -30,28 +33,6 @@ const Brands = ({ setNotification }) => {
         return text;
     }
 
-    const fetchBrands = async () => {
-        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
-        try {
-            const response = await fetch('http://localhost:8080/brand/all', { headers });
-            const errorMessage = getNotificationTextByStatusCode(response.status);
-            if (!response.ok) {
-                setNotification({ type: "error", title:"error", text: "Failed to fetch brands with an error code " + errorMessage});
-                throw new Error(errorMessage);
-            }
-            const data = await response.json();
-            setBrands(data);
-            return;
-        } catch (error) {
-            console.error('Error fetching brands:', error);
-            setNotification({ type: "error", title:"error", text: error});
-            return []; // Return an empty array if an error occurs
-        }
-    };
-
     const deleteBrand = async (id) => {
         const token = localStorage.getItem('token');
         const headers = {
@@ -69,7 +50,7 @@ const Brands = ({ setNotification }) => {
                 setNotification({ type: "error", title:"error", text: "Failed to delete brand with an error code " + errorMessage});
                 throw new Error(errorMessage);
             }
-            fetchBrands();
+            searchBrands();
             setNotification({ type: "success", title:"success", text: "Brand successfully deleted."});
             return;
         } catch (error) {
@@ -87,19 +68,23 @@ const Brands = ({ setNotification }) => {
             'Content-Type': 'application/json'
         };
 
+         let queryParams = `?pageSize=${pageSize}&pageNumber=${pageNumber}&orderByColumn=${orderByColumn}&orderByDirection=${orderByDirection}`;
+        if (searchText) queryParams += `&searchText=${searchText}`;
+        if (searchColumn) queryParams += `&searchColumn=${searchColumn}`;
+
         try {
-            const response = await fetch(`http://localhost:8080/brand/search/`, {
+            const response = await fetch(`http://localhost:8080/brand/search${queryParams}`, {
                 method: 'GET',
                 headers,
             });
 
             if (!response.ok) {
-                const errorMessage = 'Failed to delete brand.';
+                const errorMessage = 'Failed to find brands.';
                 setNotification({ type: "error", title:"error", text: errorMessage});
                 throw new Error(errorMessage);
             }
-            fetchBrands();
-            setNotification({ type: "success", title:"success", text: "Brand successfully deleted."});
+            const data = await response.json();
+            setBrands(data.content);
             return;
         } catch (error) {
             console.error('Error deleting brand:', error);
@@ -109,8 +94,8 @@ const Brands = ({ setNotification }) => {
     };
 
     useEffect(() => {
-        fetchBrands(); // Call fetchBrands when the component mounts
-    }, []);
+        searchBrands(); // Call fetchBrands when the component mounts
+    }, [pageNumber]);
 
     const transformedBrands = brands.map(brand => ({
         id: brand.id,
@@ -119,19 +104,39 @@ const Brands = ({ setNotification }) => {
         description: brand.description
     }));
 
+    const handlePageChange = (newPageNumber) => {
+        setPageNumber(newPageNumber);
+    };
+
+    const resetFilters = () => {
+        setSearchText('');
+        setSearchColumn('name');
+        setPageSize(12);
+        setPageNumber(1);
+        setOrderByColumn('name');
+        setOrderByDirection('ASC');
+        searchBrands();
+    }
+
     return (
         <div>
             <PageHeader text="Brands" color="#81BE83" textColor="white"/>
             <SearchBar
-                searchFunction={fetchBrands}
+                searchFunction={searchBrands}
                 columnList={columnList}
                 setSearchText={setSearchText}
                 setSearchColumn={setSearchColumn}
                 setPageSize={setPageSize}
                 setOrderByColumn={setOrderByColumn}
                 setOrderByDirection={setOrderByDirection}
+                resetFilters={resetFilters}
             />
             <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
+            <div className="pagination-container">
+                <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
+                <span>Page {pageNumber} of {totalPages}</span>
+                <button onClick={() => handlePageChange(pageNumber + 1)} disabled={pageNumber === totalPages}><CgChevronRight /></button>
+            </div>
         </div>
       );
 };
