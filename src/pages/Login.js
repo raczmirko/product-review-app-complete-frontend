@@ -48,7 +48,6 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
             if (!response.ok) {
                 const statusText = getNotificationTextByStatusCode(response.status);
                 const notificationText = "Login failed with an error code " + statusText;
-                console.log(response)
                 setNotification({ type: "error", title:"ERROR", text: notificationText});
                 throw new Error('Login failed');
             }
