@@ -72,7 +72,7 @@ const Brands = ({ setNotification }) => {
         if(searchColumn === undefined) searchColumn = "";
         if(orderByColumn === undefined) orderByColumn = "name";
         if(orderByDirection === undefined) orderByDirection = "ASC";
-        if(pageSize === undefined) pageSize = 12;
+        if(pageSize === undefined) pageSize = 6;
 
         const token = localStorage.getItem('token');
         const headers = {
