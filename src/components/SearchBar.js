@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CgSearch, CgDisplayGrid, CgList, CgRedo, CgAddR, CgMore, CgErase,
     CgArrowDown, CgArrowUp } from "react-icons/cg";
 import '../style/searchbar.css';
@@ -6,42 +6,50 @@ import '../style/styles.css';
 
 const SearchBar = ({    searchFunction,
                         columnList,
-                        setSearchText,
-                        setFilter,
-                        addFunction,
-                        setSearchColumn,
-                        setPageSize,
-                        setOrderByColumn,
-                        setOrderByDirection,
-                        resetFilters,
+                        addFunction
                                                 }) => {
-    const [advancedSearch, setAdvancedSearch] = useState(false);
-    const [orderAsc, setOrderAsc] = useState(true);
-    const [textInput, setTextInput] = useState('');
 
-     const handleSearch = (text) => {
-         setSearchText(text);
-         setTextInput(text);
-         searchFunction();
+    const [advancedSearch, setAdvancedSearch] = useState(false);
+    const [textInput, setTextInput] = useState('');
+    const [searchColumn, setSearchColumn] = useState('');
+    const [searchText, setSearchText] = useState('');
+    const [orderByColumn, setOrderByColumn] = useState('name');
+    const [orderByDirection, setOrderByDirection] = useState('ASC');
+    const [pageSize, setPageSize] = useState(12);
+
+    useEffect(() => {
+            searchFunction(searchText, searchColumn, orderByColumn, orderByDirection, pageSize);
+    }, [searchText, searchColumn, orderByColumn, orderByDirection, pageSize]);
+
+    const manualSearchCall = () => {
+        searchFunction(searchText, searchColumn, orderByColumn, orderByDirection, pageSize);
+    }
+
+    const resetFilters = () => {
+        setSearchText('');
+        setSearchColumn('name');
+        setOrderByColumn('name');
+        setOrderByDirection('ASC');
+    }
+
+     const handleInputChange = function(text) {
+        setTextInput(text);
+        setSearchText(text);
      }
 
-     const handlePageSizeChange = (value) => {
-        setPageSize(value);
-        searchFunction();
+     const handlePageSizeChange = (pageSize) => {
+        setPageSize(pageSize);
      }
 
     const toggleAdvancedSearch = () => {
         setAdvancedSearch(!advancedSearch);
     }
 
-    const toggleOrderAsc = () => {
-        setOrderAsc(!orderAsc);
-        setOrderByDirection(orderAsc ? 'ASC' : 'DESC');
-        searchFunction();
+    const toggleOrderByDirection = () => {
+        setOrderByDirection(orderByDirection === 'DESC' ? 'ASC' : 'DESC');
     }
 
     const eraseFilters = () => {
-        setOrderAsc(true);
         setTextInput("");
         // Reset select elements to their initial or default values (if controlled)
         const selectElements = document.querySelectorAll('.search-selector select');
@@ -60,12 +68,12 @@ const SearchBar = ({    searchFunction,
             <div className="search-bar">
                 <div className="search-input">
                     <input
-                        onChange={(e) => handleSearch(e.target.value)}
+                        onChange={(e) => handleInputChange(e.target.value)}
                         value={textInput}
                         type="text"
                         placeholder="Search..."
                     />
-                    <button onClick={() => searchFunction()}><CgSearch /></button>
+                    <button onClick={() => manualSearchCall()}><CgSearch /></button>
                 </div>
                 <div className="selector search-selector">
                     <select
@@ -110,9 +118,9 @@ const SearchBar = ({    searchFunction,
                         </select>
                     </div>
                     <div className="search-display">
-                        {!orderAsc && <button title="DESCENDING" onClick={() => toggleOrderAsc()} ><CgArrowDown /></button>}
-                        {orderAsc && <button title="ASCENDING" onClick={() => toggleOrderAsc()} ><CgArrowUp /></button>}
-                        <button title="Refresh" className="button-orange" onClick={() => searchFunction()}><CgRedo /></button>
+                        {orderByDirection === 'DESC' && <button title="DESCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowDown /></button>}
+                        {orderByDirection === 'ASC' && <button title="ASCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowUp /></button>}
+                        <button title="Refresh" className="button-orange" onClick={() => manualSearchCall()}><CgRedo /></button>
                         <button title="Display mode: CARDS"><CgDisplayGrid  /></button>
                         <button title="Display mode: TABLE"><CgList /></button>
                     </div>
