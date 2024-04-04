@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { CgTrash } from "react-icons/cg";
+import { CgTrash, CgCheckO, CgClose } from "react-icons/cg";
 import "../style/table.css";
 
 const DynamicTable = ({ data, deleteFunction }) => {
     const [tableData, setTableData] = useState(data);
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
       if (!data || data.length === 0) {
         return <p>No data available.</p>;
@@ -30,6 +31,14 @@ const DynamicTable = ({ data, deleteFunction }) => {
             setTableData(updatedData);
         };
 
+        const showConfirmDelete = () => {
+            setConfirmDelete(true);
+        };
+
+        const cancelDelete = () => {
+            setConfirmDelete(false);
+        };
+
       return (
         <table className="table">
           <thead>
@@ -48,8 +57,15 @@ const DynamicTable = ({ data, deleteFunction }) => {
                 {columnNames.map((columnName, index) => (
                   <td key={index}>{row[columnName]}</td>
                 ))}
-                <td>
-                  <button className="button-delete" onClick={() => handleDelete(row.id)}><CgTrash /></button>
+                <td className="action-table-cell">
+                    {confirmDelete ? (
+                        <>
+                            <button className="button-confirm" onClick={() => handleDelete(row.id)}><CgCheckO  /></button>
+                            <button className="button-delete" onClick={cancelDelete}><CgClose /></button>
+                        </>
+                    ) : (
+                        <button className="button-delete" onClick={() => showConfirmDelete(row.id)}><CgTrash /></button>
+                    )}
                 </td>
               </tr>
             ))}

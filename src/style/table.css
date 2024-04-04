@@ -14,3 +14,20 @@ th, td {
   border: 1px solid black;
   padding: 8px;
 }
+
+.action-table-cell {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.action-table-cell .button-delete {
+    max-width: 100%;
+}
+
+.action-table-cell button {
+    max-width: 50%;
+}
+
+.action-table-cell button:not(:last-child) {
+    margin-right: 3%;
+}
