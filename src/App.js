@@ -54,7 +54,7 @@ const App = () => {
             }
             const data = await response.json();
             setExpiryTime(new Date().getTime() + data * 1000);
-            localStorage.setItem('sessionExpiryTime', expiryTime);
+            localStorage.setItem('sessionExpiryTime', new Date().getTime() + data * 1000);
             return;
         } catch (error) {
             console.error('Error fetching session length:', error);
