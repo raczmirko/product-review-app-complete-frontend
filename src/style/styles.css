@@ -64,6 +64,7 @@ button:hover {
 
 body {
     transition: margin-left 0.3s ease;
+    overflow-y: auto;
 }
 
 .selector {
