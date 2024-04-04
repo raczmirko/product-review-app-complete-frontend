@@ -7,14 +7,20 @@ import { CgChevronRight , CgChevronLeft } from "react-icons/cg";
 
 const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
-    const [columnList, setColumnList] = useState(['name', 'countryOfOrigin', 'description'])
-    const [searchColumn, setSearchColumn] = useState('');
-    const [searchText, setSearchText] = useState('');
-    const [pageSize, setPageSize] = useState(12);
+    const [columnList, setColumnList] = useState(['name', 'countryOfOrigin', 'description']);
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [orderByColumn, setOrderByColumn] = useState('name');
-    const [orderByDirection, setOrderByDirection] = useState("ASC");
+
+    const transformedBrands = brands.map(brand => ({
+        id: brand.id,
+        name: brand.name,
+        nationality: brand.countryOfOrigin.name,
+        description: brand.description
+    }));
+
+    const handlePageChange = (newPageNumber) => {
+        setPageNumber(newPageNumber);
+    };
 
     const getNotificationTextByStatusCode = (code) => {
         let text = code + ": An error occurred, please try again later!";
@@ -61,14 +67,20 @@ const Brands = ({ setNotification }) => {
 
     const modifyBrand = async () => {};
 
-    const searchBrands = async () => {
+    const searchBrands = async (searchText, searchColumn, orderByColumn, orderByDirection, pageSize) => {
+        if(searchText === undefined) searchText = "";
+        if(searchColumn === undefined) searchColumn = "";
+        if(orderByColumn === undefined) orderByColumn = "name";
+        if(orderByDirection === undefined) orderByDirection = "ASC";
+        if(pageSize === undefined) pageSize = 12;
+
         const token = localStorage.getItem('token');
         const headers = {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         };
 
-         let queryParams = `?pageSize=${pageSize}&pageNumber=${pageNumber}&orderByColumn=${orderByColumn}&orderByDirection=${orderByDirection}`;
+        let queryParams = `?pageSize=${pageSize}&pageNumber=${pageNumber}&orderByColumn=${orderByColumn}&orderByDirection=${orderByDirection}`;
         if (searchText) queryParams += `&searchText=${searchText}`;
         if (searchColumn) queryParams += `&searchColumn=${searchColumn}`;
 
@@ -80,7 +92,6 @@ const Brands = ({ setNotification }) => {
 
             if (!response.ok) {
                 const errorMessage = 'Failed to find brands.';
-                setNotification({ type: "error", title:"error", text: errorMessage});
                 throw new Error(errorMessage);
             }
             const data = await response.json();
@@ -88,35 +99,13 @@ const Brands = ({ setNotification }) => {
             return;
         } catch (error) {
             console.error('Error deleting brand:', error);
-            setNotification({ type: "error", title:"error", text: error});
             return []; // Return an empty array if an error occurs
         }
     };
 
     useEffect(() => {
-        searchBrands(); // Call fetchBrands when the component mounts
-    }, [pageNumber]);
-
-    const transformedBrands = brands.map(brand => ({
-        id: brand.id,
-        name: brand.name,
-        nationality: brand.countryOfOrigin.name,
-        description: brand.description
-    }));
-
-    const handlePageChange = (newPageNumber) => {
-        setPageNumber(newPageNumber);
-    };
-
-    const resetFilters = () => {
-        setSearchText('');
-        setSearchColumn('name');
-        setPageSize(12);
-        setPageNumber(1);
-        setOrderByColumn('name');
-        setOrderByDirection('ASC');
         searchBrands();
-    }
+    }, []);
 
     return (
         <div>
@@ -124,12 +113,6 @@ const Brands = ({ setNotification }) => {
             <SearchBar
                 searchFunction={searchBrands}
                 columnList={columnList}
-                setSearchText={setSearchText}
-                setSearchColumn={setSearchColumn}
-                setPageSize={setPageSize}
-                setOrderByColumn={setOrderByColumn}
-                setOrderByDirection={setOrderByDirection}
-                resetFilters={resetFilters}
             />
             <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
             <div className="pagination-container">
