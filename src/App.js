@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Brands from './pages/Brands';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/styles.css';
 
 const App = () => {
@@ -17,6 +17,16 @@ const App = () => {
     const [contentState, setContentState] = useState("content");
     const [username, setUsername] = useState("");
     const [expiryTime, setExpiryTime] = useState(null);
+
+    useEffect(() => {
+        const storedExpiryTime = localStorage.getItem('sessionExpiryTime');
+        const currentTime = new Date().getTime();
+
+        if (storedExpiryTime && storedExpiryTime > currentTime) {
+            setIsLoggedIn(true);
+            setExpiryTime(storedExpiryTime);
+        }
+    }, []);
 
     const handleShowNotification = () => {
         setNotification(true);
@@ -44,6 +54,7 @@ const App = () => {
             }
             const data = await response.json();
             setExpiryTime(new Date().getTime() + data * 1000);
+            localStorage.setItem('sessionExpiryTime', expiryTime);
             return;
         } catch (error) {
             console.error('Error fetching session length:', error);
