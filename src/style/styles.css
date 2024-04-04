@@ -55,6 +55,7 @@ button:hover {
 .content {
     margin-left: 70px;
     padding: 10px;
+    margin-bottom: 80px;
 }
 
 .content-expanded {
@@ -118,6 +119,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 60px;
 }
 
 .pagination-container button {
