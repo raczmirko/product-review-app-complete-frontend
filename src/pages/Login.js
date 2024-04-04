@@ -42,24 +42,28 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
                 const token = authorizationHeader.split(' ')[1];
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
-            } else {
-                console.error('Authorization header not found.');
             }
+
             if (!response.ok) {
                 const statusText = getNotificationTextByStatusCode(response.status);
                 const notificationText = "Login failed with an error code " + statusText;
-                setNotification({ type: "error", title:"ERROR", text: notificationText});
+                setNotification({ type: "error", title: "ERROR", text: notificationText });
                 throw new Error('Login failed');
             }
-            else {
-                setNotification({ type: "success", title:"success", text: "Logged in successfully."});
-                onLogin();
+            setNotification({ type: "success", title: "Success", text: "Logged in successfully." });
+            onLogin();
+            return response.json();
+        })
+        .catch(error => {
+            if (error instanceof TypeError) {
+                console.error('Network error. The server might be down.');
+                setNotification({ type: "error", title: "ERROR", text: 'Network error. The server might be down.'});
+            } else {
+                console.error('Error during login:', error);
+                setNotification({ type: "error", title: "ERROR", text: error});
             }
-        })
-        .then(data => {
-        })
-        .catch(error => setNotification({ type: "error", title:"ERROR", text: "Problem occurred when trying to communicate with the server."}));
-    };
+        });
+    }
 
     if (isLoggedIn) {
         return <Navigate to="/" />;
