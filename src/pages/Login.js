@@ -52,7 +52,7 @@ const Login = ({ onLogin, isLoggedIn, notification, setNotification }) => {
             }
             setNotification({ type: "success", title: "Success", text: "Logged in successfully." });
             onLogin();
-            return response.json();
+            return;
         })
         .catch(error => {
             if (error instanceof TypeError) {
