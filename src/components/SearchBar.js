@@ -15,7 +15,7 @@ const SearchBar = ({    searchFunction,
     const [searchText, setSearchText] = useState('');
     const [orderByColumn, setOrderByColumn] = useState('name');
     const [orderByDirection, setOrderByDirection] = useState('ASC');
-    const [pageSize, setPageSize] = useState(12);
+    const [pageSize, setPageSize] = useState(6);
 
     useEffect(() => {
             searchFunction(searchText, searchColumn, orderByColumn, orderByDirection, pageSize);
