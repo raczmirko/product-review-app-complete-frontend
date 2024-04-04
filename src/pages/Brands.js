@@ -96,6 +96,7 @@ const Brands = ({ setNotification }) => {
             }
             const data = await response.json();
             setBrands(data.content);
+            setTotalPages(data.totalPages);
             return;
         } catch (error) {
             console.error('Error deleting brand:', error);
@@ -105,7 +106,7 @@ const Brands = ({ setNotification }) => {
 
     useEffect(() => {
         searchBrands();
-    }, []);
+    }, [pageNumber]);
 
     return (
         <div>
