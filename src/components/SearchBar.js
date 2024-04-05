@@ -6,7 +6,8 @@ import '../style/styles.css';
 
 const SearchBar = ({    searchFunction,
                         columnList,
-                        addFunction
+                        addFunction,
+                        setDisplayMode
                                                 }) => {
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
@@ -121,8 +122,8 @@ const SearchBar = ({    searchFunction,
                         {orderByDirection === 'DESC' && <button title="DESCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowDown /></button>}
                         {orderByDirection === 'ASC' && <button title="ASCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowUp /></button>}
                         <button title="Refresh" className="button-orange" onClick={() => manualSearchCall()}><CgRedo /></button>
-                        <button title="Display mode: CARDS"><CgDisplayGrid  /></button>
-                        <button title="Display mode: TABLE"><CgList /></button>
+                        <button title="Display mode: CARDS" onClick={() => setDisplayMode('CARDS')}><CgDisplayGrid  /></button>
+                        <button title="Display mode: TABLE" onClick={() => setDisplayMode('TABLE')}><CgList /></button>
                     </div>
                 </div>
             }

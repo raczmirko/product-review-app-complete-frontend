@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
 import SearchBar from "../components/SearchBar";
 import DynamicTable from "../components/DynamicTable";
+import DynamicCards from "../components/DynamicCards";
 import "../style/styles.css";
 import { CgChevronRight , CgChevronLeft } from "react-icons/cg";
 
@@ -10,6 +11,7 @@ const Brands = ({ setNotification }) => {
     const [columnList, setColumnList] = useState(['name', 'countryOfOrigin', 'description']);
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [displayMode, setDisplayMode] = useState('TABLE');
 
     const transformedBrands = brands.map(brand => ({
         id: brand.id,
@@ -114,8 +116,10 @@ const Brands = ({ setNotification }) => {
             <SearchBar
                 searchFunction={searchBrands}
                 columnList={columnList}
+                setDisplayMode={setDisplayMode}
             />
-            <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>
+            {displayMode === 'TABLE' && <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>}
+            {displayMode === 'CARDS' && <DynamicCards data={transformedBrands} deleteFunction={deleteBrand}/>}
             <div className="pagination-container">
                 <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
                 <span>Page {pageNumber} of {totalPages}</span>
