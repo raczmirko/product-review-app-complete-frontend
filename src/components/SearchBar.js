@@ -42,6 +42,27 @@ const SearchBar = ({    searchFunction,
         setPageSize(pageSize);
      }
 
+     const handleDisplayModeChange = (mode) => {
+        setPageSize(mode === 'TABLE' ? 10 : 6);
+        const selectComponent = document.getElementById('page-size-selector');
+        console.log(selectComponent)
+        if (mode === 'TABLE') {
+            Array.from(selectComponent.options).forEach(option => {
+                if (option.value === '10') {
+                    option.selected = true;
+                }
+            });
+        }
+        if (mode === 'CARDS') {
+            Array.from(selectComponent.options).forEach(option => {
+                if (option.value === '6') {
+                    option.selected = true;
+                }
+            });
+        }
+        setDisplayMode(mode);
+     }
+
     const toggleAdvancedSearch = () => {
         setAdvancedSearch(!advancedSearch);
     }
@@ -97,12 +118,13 @@ const SearchBar = ({    searchFunction,
                 <div className="search-bar search-bar-advanced">
                     <div className="selector search-selector">
                         <select
+                            id="page-size-selector"
                             defaultValue=""
                             onChange={(e) => handlePageSizeChange(e.target.value)}
                         >
                             <option disabled>Page size</option>
                             <option value="6">page size: 6</option>
-                            <option value="12">page size: 12</option>
+                            <option value="10">page size: 10</option>
                             <option value="24">page size: 24</option>
                             <option value="48">page size: 48</option>
                         </select>
@@ -122,8 +144,8 @@ const SearchBar = ({    searchFunction,
                         {orderByDirection === 'DESC' && <button title="DESCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowDown /></button>}
                         {orderByDirection === 'ASC' && <button title="ASCENDING" onClick={() => toggleOrderByDirection()} ><CgArrowUp /></button>}
                         <button title="Refresh" className="button-orange" onClick={() => manualSearchCall()}><CgRedo /></button>
-                        <button title="Display mode: CARDS" onClick={() => setDisplayMode('CARDS')}><CgDisplayGrid  /></button>
-                        <button title="Display mode: TABLE" onClick={() => setDisplayMode('TABLE')}><CgList /></button>
+                        <button title="Display mode: CARDS" onClick={() => handleDisplayModeChange('CARDS')}><CgDisplayGrid  /></button>
+                        <button title="Display mode: TABLE" onClick={() => handleDisplayModeChange('TABLE')}><CgList /></button>
                     </div>
                 </div>
             }
