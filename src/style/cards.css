@@ -1,27 +1,25 @@
 .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 100%;
-    font-family: "Arial Narrow", sans-serif;
+    margin-top:10px;
+    margin-bottom:60px;
+    padding:20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)); /* Adjust column width as needed */
+    grid-gap: 20px; /* Adjust gap between cards */
     font-size: 24px;
-    letter-spacing: 2px;
-    align-items: center;
 }
 
 .card {
-    width: calc(30% - 20px);
-    height: calc(50% - 20px);
+    width: 100%; /* Adjust width as needed */
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
+    transition: transform 0.3s ease;
     box-sizing: border-box;
-     transition: transform 0.3s ease;
 }
 
 .card:hover {
   transform: scale(1.05); /* Zoom in effect on hover */
+  z-index:1;
 }
 
 .card-field {
@@ -31,11 +29,11 @@
 .field-name {
     margin-bottom: 10px;
     text-transform: uppercase;
-    color: #333;
+    color: #666;
 }
 
 .field-value {
-    color: #666;
+    color: #333;
 }
 
 .card-field hr {
@@ -59,5 +57,9 @@
     .card {
         width: calc(100% - 20px);
     }
+}
+
+.button-expand {
+    width: 60px;
 }
 

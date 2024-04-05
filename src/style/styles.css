@@ -126,6 +126,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 60px;
+    z-index:999; /*sidebar is 1000 so this one is still high but sidebar is higher*/
 }
 
 .pagination-container button {
