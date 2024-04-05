@@ -28,7 +28,7 @@ const DynamicCards = ({ data, deleteFunction }) => {
                 <div key={index} className="card">
                     {Object.entries(row).map(([key, value]) => (
                         <div key={key} className="card-field">
-                            <span className="field-name">{key}:</span>
+                            <span className="field-name">{key}: </span>
                             <span className="field-value">{value}</span>
                             <hr/>
                         </div>
