@@ -45,7 +45,6 @@ const SearchBar = ({    searchFunction,
      const handleDisplayModeChange = (mode) => {
         setPageSize(mode === 'TABLE' ? 10 : 6);
         const selectComponent = document.getElementById('page-size-selector');
-        console.log(selectComponent)
         if (mode === 'TABLE') {
             Array.from(selectComponent.options).forEach(option => {
                 if (option.value === '10') {
