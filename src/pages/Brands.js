@@ -71,7 +71,7 @@ const Brands = ({ setNotification }) => {
 
     const searchBrands = async (searchText, searchColumn, orderByColumn, orderByDirection, pageSize) => {
         if(searchText === undefined) searchText = "";
-        if(searchColumn === undefined) searchColumn = "";
+        if(searchColumn === undefined) searchColumn = "name";
         if(orderByColumn === undefined) orderByColumn = "name";
         if(orderByDirection === undefined) orderByDirection = "ASC";
         if(pageSize === undefined) pageSize = 6;
