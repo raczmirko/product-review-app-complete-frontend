@@ -70,10 +70,10 @@ const Brands = ({ setNotification }) => {
     const modifyBrand = async () => {};
 
     const searchBrands = async (searchText, searchColumn, orderByColumn, orderByDirection, pageSize) => {
-        if(searchText === undefined) searchText = "";
-        if(searchColumn === undefined) searchColumn = "name";
-        if(orderByColumn === undefined) orderByColumn = "name";
-        if(orderByDirection === undefined) orderByDirection = "ASC";
+        if(searchText === undefined) searchText = '';
+        if(searchColumn === undefined || searchColumn === '') searchColumn = 'name';
+        if(orderByColumn === undefined || searchColumn === '') orderByColumn = 'name';
+        if(orderByDirection === undefined) orderByDirection = 'ASC';
         if(pageSize === undefined) pageSize = 6;
 
         const token = localStorage.getItem('token');
