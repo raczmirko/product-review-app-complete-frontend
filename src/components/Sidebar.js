@@ -38,7 +38,7 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
                 {sidebarOptions.map((option, index) => (
                     <li key={index}>
                         {
-                            (isLoggedIn || !isLoggedIn && option.visibleWithoutLogin) &&
+                            (isLoggedIn || (!isLoggedIn && option.visibleWithoutLogin)) &&
                             <NavLink to={option.route} onClick={isLoggedIn && option.text === 'Login' ? showAlreadyLoggedInAlert : null}>
                                 {option.icon}
                                 {isSidebarOpen && <span> {option.text}</span>}
@@ -51,8 +51,8 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
                 <div className="button-logout">
                     {isLoggedIn &&
                         <NavLink to="/" onClick={handleLogout}>
-                            <CgLogOut />
-                            {isSidebarOpen && <span> Log out</span>}
+                            <CgLogOut className="hyperlink"/>
+                            {isSidebarOpen && <span className="hyperlink"> Log out</span>}
                         </NavLink>
                     }
                 </div>

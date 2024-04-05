@@ -52,6 +52,10 @@ button:hover {
     background-color: red;
 }
 
+.hyperlink {
+    color: #007bff;
+}
+
 .content {
     margin-left: 70px;
     padding: 10px;
@@ -66,6 +70,8 @@ button:hover {
 body {
     transition: margin-left 0.3s ease;
     overflow-y: auto;
+    background-color: #121212;
+    color: white;
 }
 
 .selector {
@@ -113,9 +119,9 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #ffffff; /* Optional: Set background color */
-    border-top: 1px solid #e0e0e0; /* Optional: Add a border at the top */
-    padding: 10px 0; /* Optional: Add padding for spacing */
+    background-color: #121212;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,7 +129,7 @@ body {
 }
 
 .pagination-container button {
-    margin: 0 10px; /* Adjust margin between buttons as needed */
+    margin: 0 10px;
     width: 100px;
 }
 
