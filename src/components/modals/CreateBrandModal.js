@@ -23,23 +23,25 @@ const CreateBrandModal = ({ entityToAdd, closeFunction, createBrandFunction }) =
 
     return (
         <div className="modal-create">
-            <div className="page-header">{`NEW ${entityToAdd}`}</div>
-            <div className="form-group">
-                <label>Username:</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
-            </div>
-            <div className="form-group">
-                <label>Country:</label>
-                <CountrySelector onSelect={handleCountrySelect} />
-            </div>
-            <div className="form-group textarea-container">
-                <label>Description:</label>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} required/>
-            </div>
-            <div className="modal-buttons" >
-                <button className="button-confirm" onClick={handleCreate}>Create</button>
-                <button className="button-cancel" onClick={handleClose}>Cancel</button>
-            </div>
+            <form onSubmit={handleCreate}>
+                <div className="page-header">{`NEW ${entityToAdd}`}</div>
+                <div className="form-group">
+                    <label>Username:</label>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
+                </div>
+                <div className="form-group">
+                    <label>Country:</label>
+                    <CountrySelector onSelect={handleCountrySelect} />
+                </div>
+                <div className="form-group textarea-container">
+                    <label>Description:</label>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} required/>
+                </div>
+                <div className="modal-buttons" >
+                    <button type="submit" className="button-confirm">Create</button>
+                    <button className="button-cancel" onClick={handleClose}>Cancel</button>
+                </div>
+            </form>
         </div>
     );
 };
