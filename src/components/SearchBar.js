@@ -110,7 +110,7 @@ const SearchBar = ({    searchFunction,
                 <div className="search-display">
                     <button title="Advanced Options" onClick={() => toggleAdvancedSearch()}><CgMore /></button>
                     <button title="Reset filters" className="button-delete" onClick={() => eraseFilters()} title="Reset Filters"><CgErase /></button>
-                    <button title="Add new" className="button-confirm"><CgAddR /></button>
+                    <button title="Add new" onClick={() => addFunction()} className="button-confirm"><CgAddR /></button>
                 </div>
             </div>
             { advancedSearch &&

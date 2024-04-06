@@ -3,15 +3,21 @@ import PageHeader from "../components/PageHeader";
 import SearchBar from "../components/SearchBar";
 import DynamicTable from "../components/DynamicTable";
 import DynamicCards from "../components/DynamicCards";
+import CreateBrandModal from "../components/modals/CreateBrandModal";
 import "../style/styles.css";
 import { CgChevronRight , CgChevronLeft } from "react-icons/cg";
 
 const Brands = ({ setNotification }) => {
     const [brands, setBrands] = useState([]);
+    const [modalActive, setModalActive] = useState(false);
     const [columnList, setColumnList] = useState(['name', 'countryOfOrigin', 'description']);
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [displayMode, setDisplayMode] = useState('TABLE');
+
+    const toggleShowModal = () => {
+        setModalActive(!modalActive);
+    }
 
     const transformedBrands = brands.map(brand => ({
         id: brand.id,
@@ -108,22 +114,34 @@ const Brands = ({ setNotification }) => {
 
     useEffect(() => {
         searchBrands();
-    }, [pageNumber]);
+    }, [pageNumber, modalActive]);
 
     return (
         <div>
-            <PageHeader text="Brands" color="#81BE83" textColor="white"/>
-            <SearchBar
-                searchFunction={searchBrands}
-                columnList={columnList}
-                setDisplayMode={setDisplayMode}
-            />
-            {displayMode === 'TABLE' && <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>}
-            {displayMode === 'CARDS' && <DynamicCards data={transformedBrands} deleteFunction={deleteBrand}/>}
-            <div className="pagination-container">
-                <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
-                <span>Page {pageNumber} of {totalPages}</span>
-                <button onClick={() => handlePageChange(pageNumber + 1)} disabled={pageNumber === totalPages}><CgChevronRight /></button>
+            <div className={`main-content ${modalActive ? 'blurred-background' : ''}`}>
+                <PageHeader text="Brands" color="#81BE83" textColor="white"/>
+                <SearchBar
+                    searchFunction={searchBrands}
+                    columnList={columnList}
+                    setDisplayMode={setDisplayMode}
+                    addFunction={toggleShowModal}
+                />
+                {displayMode === 'TABLE' && <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>}
+                {displayMode === 'CARDS' && <DynamicCards data={transformedBrands} deleteFunction={deleteBrand}/>}
+                <div className="pagination-container">
+                    <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
+                    <span>Page {pageNumber} of {totalPages}</span>
+                    <button onClick={() => handlePageChange(pageNumber + 1)} disabled={pageNumber === totalPages}><CgChevronRight /></button>
+                </div>
+            </div>
+            <div>
+                {modalActive &&
+                    <div className="modal-container">
+                        <CreateBrandModal
+                            entityToAdd="brand"
+                            closeFunction={toggleShowModal} />
+                    </div>
+                }
             </div>
         </div>
       );
