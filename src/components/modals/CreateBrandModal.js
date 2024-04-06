@@ -12,11 +12,12 @@ const CreateBrandModal = ({ entityToAdd, closeFunction, createBrandFunction }) =
         setCountry(country)
     }
 
-    const handleClose = () => {
+    const handleClose = (e) => {
+        e.preventDefault();
         closeFunction();
     }
 
-    const handleCreate = () => {
+    const handleCreate = (e) => {
         createBrandFunction(name, country, description);
         closeFunction();
     }
@@ -39,7 +40,7 @@ const CreateBrandModal = ({ entityToAdd, closeFunction, createBrandFunction }) =
                 </div>
                 <div className="modal-buttons" >
                     <button type="submit" className="button-confirm">Create</button>
-                    <button className="button-cancel" onClick={handleClose}>Cancel</button>
+                    <button className="button-cancel" onClick={(e) => handleClose(e)}>Cancel</button>
                 </div>
             </form>
         </div>
