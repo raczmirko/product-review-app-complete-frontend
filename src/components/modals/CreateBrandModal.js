@@ -5,14 +5,19 @@ import "../../style/styles.css";
 
 const CreateBrandModal = ({ entityToAdd, closeFunction, createBrandFunction }) => {
     const [name, setName] = useState('');
-    const [country, setCountry] = useState({});
+    const [country, setCountry] = useState('');
     const [description, setDescription] = useState('');
 
-    const handleCountrySelect = () => {
-
+    const handleCountrySelect = (country) => {
+        setCountry(country)
     }
 
     const handleClose = () => {
+        closeFunction();
+    }
+
+    const handleCreate = () => {
+        createBrandFunction(name, country, description);
         closeFunction();
     }
 
@@ -32,7 +37,7 @@ const CreateBrandModal = ({ entityToAdd, closeFunction, createBrandFunction }) =
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} required/>
             </div>
             <div className="modal-buttons" >
-                <button className="button-confirm" onClick={handleClose}>Create</button>
+                <button className="button-confirm" onClick={handleCreate}>Create</button>
                 <button className="button-cancel" onClick={handleClose}>Cancel</button>
             </div>
         </div>

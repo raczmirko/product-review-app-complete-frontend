@@ -73,6 +73,38 @@ const Brands = ({ setNotification }) => {
         }
     };
 
+    const createBrand = async (name, country, description) => {
+            const token = localStorage.getItem('token');
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+            const params = {
+                name: name,
+                countryOfOrigin: country,
+                description: description
+            };
+
+            try {
+                const response = await fetch(`http://localhost:8080/brand/create`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(params)
+                });
+                const errorMessage = getNotificationTextByStatusCode(response.status);
+                if (!response.ok) {
+                    setNotification({ type: "error", title:"error", text: "Failed to create brand with an error code " + errorMessage});
+                    throw new Error(errorMessage);
+                }
+                searchBrands();
+                setNotification({ type: "success", title:"success", text: "Brand successfully created."});
+                return;
+            } catch (error) {
+                setNotification({ type: "error", title:"error", text: error});
+                return []; // Return an empty array if an error occurs
+            }
+        };
+
     const modifyBrand = async () => {};
 
     const searchBrands = async (searchText, searchColumn, orderByColumn, orderByDirection, pageSize) => {
@@ -133,7 +165,9 @@ const Brands = ({ setNotification }) => {
                 <div className="modal-container">
                     <CreateBrandModal
                         entityToAdd="brand"
-                        closeFunction={toggleShowModal} />
+                        closeFunction={toggleShowModal}
+                        createBrandFunction={createBrand}
+                     />
                 </div>
             }
             <div className={`pagination-container ${modalActive ? 'blurred-background' : ''}`}>
