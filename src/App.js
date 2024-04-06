@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Brands from './pages/Brands';
+import Countries from './pages/Countries';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import './style/styles.css';
@@ -111,6 +112,7 @@ const App = () => {
                 </>
                 }/>
             <Route path="/brand" element={<Brands setNotification={setNotification}/>} />
+            <Route path="/country" element={<Countries setNotification={setNotification}/>} />
           </Routes>
         </div>
         </div>

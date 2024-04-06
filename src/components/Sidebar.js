@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style/sidebar.css';
-import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd, CgShoppingBag } from "react-icons/cg";
+import { CgMenu, CgHome, CgLogIn, CgLogOut, CgUserAdd, CgShoppingBag, CgFlag } from "react-icons/cg";
 import { useSidebar } from './SidebarContext';
 
 const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
@@ -28,7 +28,8 @@ const Sidebar = ({ isLoggedIn, logOut, setNotification, username }) => {
         { icon: <CgHome />, text: 'Home', route: '/', visibleWithoutLogin: true},
         { icon: <CgLogIn />, text: 'Login', route: '/login', visibleWithoutLogin: true },
         { icon: <CgUserAdd />, text: 'Register', route: '/register', visibleWithoutLogin: true },
-        { icon: <CgShoppingBag />, text: 'Brands', route: '/brand', visibleWithoutLogin: false }
+        { icon: <CgShoppingBag />, text: 'Brands', route: '/brand', visibleWithoutLogin: false },
+        { icon: <CgFlag />, text: 'Countries', route: '/country', visibleWithoutLogin: false }
     ];
 
     return (
