@@ -22,7 +22,7 @@ th, td {
 
 .action-table-cell .button-delete {
     max-width: 100%;
-    min-width: 70px;
+    min-width: 100px;
 }
 
 .action-table-cell button {
