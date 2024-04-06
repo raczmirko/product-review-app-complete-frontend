@@ -128,20 +128,18 @@ const Brands = ({ setNotification }) => {
                 />
                 {displayMode === 'TABLE' && <DynamicTable data={transformedBrands} deleteFunction={deleteBrand}/>}
                 {displayMode === 'CARDS' && <DynamicCards data={transformedBrands} deleteFunction={deleteBrand}/>}
-                <div className="pagination-container">
-                    <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
-                    <span>Page {pageNumber} of {totalPages}</span>
-                    <button onClick={() => handlePageChange(pageNumber + 1)} disabled={pageNumber === totalPages}><CgChevronRight /></button>
-                </div>
             </div>
-            <div>
-                {modalActive &&
-                    <div className="modal-container">
-                        <CreateBrandModal
-                            entityToAdd="brand"
-                            closeFunction={toggleShowModal} />
-                    </div>
-                }
+            {modalActive &&
+                <div className="modal-container">
+                    <CreateBrandModal
+                        entityToAdd="brand"
+                        closeFunction={toggleShowModal} />
+                </div>
+            }
+            <div className={`pagination-container ${modalActive ? 'blurred-background' : ''}`}>
+                <button onClick={() => handlePageChange(pageNumber - 1)} disabled={pageNumber === 1}><CgChevronLeft /></button>
+                <span>Page {pageNumber} of {totalPages}</span>
+                <button onClick={() => handlePageChange(pageNumber + 1)} disabled={pageNumber === totalPages}><CgChevronRight /></button>
             </div>
         </div>
       );

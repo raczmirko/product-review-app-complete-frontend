@@ -136,7 +136,6 @@ body {
 
 .modal-container {
     position: fixed;
-    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 60%;
@@ -147,9 +146,19 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     overflow: auto; /* Enable scrolling if content exceeds the height */
+    animation: slideInFromBottom 0.3s ease forwards;
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translate(-50%, 100%); /* Start off-screen at the bottom */
+    }
+    100% {
+        transform: translate(-50%, -50%); /* Translate to the center of the screen */
+    }
 }
 
 .blurred-background {
-    filter: blur(2px); /* Adjust the blur intensity as needed */
+    filter: blur(2px);
+    pointer-events: none;
 }
-
